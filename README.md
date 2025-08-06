@@ -14,17 +14,41 @@ This project demonstrates how to build a complete RAG pipeline that can:
 
 ```
 LlamaIndex/
-├── Basic.ipynb                    # Initial experiments with local HF models
-├── HuggingFace-LlamaIndex/
-│   ├── Hf-API.ipynb              # HuggingFace API integration attempts
-│   └── OpenAI-llm.ipynb          # Working OpenAI implementation
-├── data/
+├── HuggingFace-OpenAI-LlamaIndex/     # Main notebook directory
+│   ├── HF-locally.ipynb              # Initial experiments with local HF models
+│   └── OpenAI-llm.ipynb              # Working OpenAI implementation
+├── data/                              # Document storage
 │   └── paul_graham/
-│       └── paul_graham_essay.txt  # Sample document
-├── requirements.txt               # Project dependencies
-├── .env                          # Environment variables (API keys)
-└── README.md                     # This file
+│       └── paul_graham_essay.txt      # Sample document
+├── tutorial/                          # Tutorial files
+│   ├── attention.pdf                 # Sample PDF document
+│   └── Basics.ipynb                  # Basic tutorial implementation
+├── .env                              # Environment variables (API keys)
+├── .gitignore                        # Git ignore rules
+├── README.md                         # Project documentation
+└── requirement.txt                   # Project dependencies
 ```
+
+### Directory Descriptions
+
+#### HuggingFace-OpenAI-LlamaIndex/
+Contains the main implementation notebooks:
+- **HF-locally.ipynb**: Experiments with local HuggingFace models including TinyLlama
+- **OpenAI-llm.ipynb**: implementation using OpenAI GPT-3.5-turbo
+
+#### data/
+- **paul_graham_essay.txt**: Sample document used for RAG demonstrations and testing
+
+#### tutorial/
+Learning materials and examples:
+- **attention.pdf**: Additional PDF document for testing
+- **Basics.ipynb**: Basic tutorial and learning implementation
+
+#### Configuration Files
+- **.env**: Contains API keys for OpenAI and HuggingFace
+- **requirement.txt**: Python package dependencies
+- **.gitignore**: Specifies files to ignore in version control
+
 
 ## Features
 
