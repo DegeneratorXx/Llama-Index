@@ -100,7 +100,7 @@ Formatted Prompt:
     ↓
 Context + Query → GPT-3.5-turbo → Generated Response
     ↓
-Final Answer → User Interface
+Final Response
 ```
 
 ## Installation
@@ -108,8 +108,7 @@ Final Answer → User Interface
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd LlamaIndex
-```
+̀```
 
 2. Create virtual environment:
 ```bash
