@@ -132,61 +132,6 @@ echo "OPENAI_API_KEY=sk-your-openai-key-here" >> .env
 echo "HF_TOKEN=hf_your-huggingface-token-here" >> .env
 ```
 
-## Usage
-
-### Basic Setup
-
-```python
-import os
-from dotenv import load_dotenv
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings
-from llama_index.llms.openai import OpenAI
-from llama_index.embeddings.openai import OpenAIEmbedding
-
-# Load environment variables
-load_dotenv()
-
-# Configure models
-Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0.1)
-Settings.embed_model = OpenAIEmbedding()
-Settings.chunk_size = 512
-
-# Load documents
-docs = SimpleDirectoryReader("./data/paul_graham/").load_data()
-
-# Create index and query engine
-index = VectorStoreIndex.from_documents(docs)
-query_engine = index.as_query_engine()
-
-# Query the documents
-response = query_engine.query("What does the author say about HTML?")
-print(response)
-```
-
-### Alternative: HuggingFace Local Models
-
-```python
-from llama_index.llms.huggingface import HuggingFaceLLM
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-import torch
-
-# Local HuggingFace models (no API key required)
-llm = HuggingFaceLLM(
-    model_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-    tokenizer_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-    context_window=2048,
-    max_new_tokens=256,
-    model_kwargs={"torch_dtype": torch.bfloat16},
-    device_map="auto"
-)
-
-embed_model = HuggingFaceEmbedding(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
-
-Settings.llm = llm
-Settings.embed_model = embed_model
-```
 
 ## Configuration
 
@@ -201,20 +146,6 @@ Settings.embed_model = embed_model
 - **OpenAI**: text-embedding-ada-002 (recommended)
 - **HuggingFace**: sentence-transformers/all-MiniLM-L6-v2 (free, local)
 
-### Settings
-
-```python
-# Chunk configuration
-Settings.chunk_size = 512          # Tokens per chunk
-Settings.chunk_overlap = 50        # Overlap between chunks
-
-# LLM parameters
-temperature = 0.1                  # Response randomness (0.0-1.0)
-max_new_tokens = 256              # Maximum response length
-
-# Retrieval settings
-similarity_top_k = 2              # Number of chunks to retrieve
-```
 
 ## API Keys
 
@@ -228,51 +159,9 @@ similarity_top_k = 2              # Number of chunks to retrieve
 2. Create new token
 3. Add to `.env` file as `HF_TOKEN=hf_...`
 
-## Troubleshooting
 
-### Common Issues
 
-1. **OpenAI API Key Error**
-   - Ensure `OPENAI_API_KEY` is set in `.env` file
-   - Check API key validity and billing status
-
-2. **HuggingFace Model Not Found**
-   - Verify model name exists on HuggingFace Hub
-   - Check HuggingFace token permissions
-
-3. **Memory Issues with Local Models**
-   - Use smaller models (TinyLlama, DistilGPT-2)
-   - Enable `torch_dtype=torch.float16` for memory efficiency
-
-### Performance Optimization
-
-```python
-# Memory efficient settings
-Settings.chunk_size = 256          # Smaller chunks
-model_kwargs = {"torch_dtype": torch.float16}  # Half precision
-
-# Faster embeddings
-embed_model = HuggingFaceEmbedding(
-    model_name="sentence-transformers/all-MiniLM-L6-v2",
-    device="cuda"  # Use GPU if available
-)
-```
-
-## Examples
-
-See the notebook files for complete examples:
-- `OpenAI-llm.ipynb`: Production-ready OpenAI implementation
-- `Basic.ipynb`: Local HuggingFace model experiments
-- `Hf-API.ipynb`: HuggingFace API integration attempts
 
 ## Dependencies
-
-Core dependencies:
-- `llama-index`: Main framework
-- `openai`: OpenAI API client
-- `transformers`: HuggingFace model loading
-- `torch`: PyTorch for local models
-- `sentence-transformers`: Embedding models
-- `python-dotenv`: Environment variable management
 
 See `requirements.txt` for complete dependency list.
